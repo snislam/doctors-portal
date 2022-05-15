@@ -6,11 +6,12 @@ import About from './Pages/About/About';
 import Login from './Pages/Login/Login';
 import Blogs from './Pages/Blogs/Blogs';
 import Reviews from './Pages/Reviews/Reviews';
-import Appoinment from './Appoinment';
+import Appoinment from './Pages/Appoinment/Appoinment';
+import Register from './Pages/Register/Register';
 
 function App() {
   return (
-    <div>
+    <div className='max-w-7xl mx-auto'>
       <Header />
       <Routes>
         <Route path='/' element={<Home />} />
@@ -19,6 +20,7 @@ function App() {
         <Route path='/reviews' element={<Reviews />} />
         <Route path='/blogs' element={<Blogs />} />
         <Route path='/login' element={<Login />} />
+        <Route path='/register' element={<Register />} />
       </Routes>
     </div>
   );
