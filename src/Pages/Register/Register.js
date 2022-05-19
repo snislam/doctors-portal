@@ -1,20 +1,24 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import SocialLogin from '../Common/SocialLogin/SocialLogin';
-import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { useCreateUserWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init';
 import Loading from '../Common/Loading/Loading';
+import useToken from '../../hooks/useToken';
 
 const Register = () => {
     const [
         createUserWithEmailAndPassword,
-        user,
+        gUser,
         loading,
         error,
     ] = useCreateUserWithEmailAndPassword(auth);
+    const [signInWithGoogle, guser, gloading] = useSignInWithGoogle(auth);
+    const [token] = useToken(gUser || guser);
+    const navigate = useNavigate();
 
-    if (user) {
-        return "Already registered"
+    if (token) {
+        navigate('/')
     }
 
     if (loading) {
@@ -45,14 +49,13 @@ const Register = () => {
                         <label htmlFor="password">Password</label>
                         <input className='border-2 rounded-md p-2' type="password" name="password" id="password" required />
                     </div>
-                    <p className=''>Forgot password?</p>
                     <p className='text-red-500'>{error?.message}</p>
                     <div className='w-100'>
                         <input className='btn btn-block btn-accent my-5' type="submit" value="Register" />
                     </div>
                     <p>Already have an account? <Link to='/login' className='text-primary'>Login here.</Link></p>
                 </form>
-                <SocialLogin />
+                <SocialLogin signInWithGoogle={signInWithGoogle} token={token} loading={gloading} />
             </div>
         </div>
     );

@@ -1,27 +1,43 @@
 import { format } from 'date-fns';
 import React from 'react';
 import axios from 'axios';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import auth from '../../firebase.init';
+import { toast } from "react-toastify"
 
-const BookingModal = ({ treatment, date, setTreatment }) => {
-    const { name, slots } = treatment;
+const BookingModal = ({ treatment, date, setTreatment, refetch }) => {
+    const { name, slots, _id } = treatment;
     const newDate = format(date, "PP");
-
+    const [user] = useAuthState(auth)
     const handleSubmit = e => {
         e.preventDefault();
 
         const slot = e.target.slot.value;
-        const name = e.target.name.value;
+        const patientName = e.target.name.value;
         const email = e.target.email.value;
         const number = e.target.number.value;
 
-        const bookingDetails = { name, slot, date: newDate, email, number };
+        const bookingDetails = {
+            treatmentId: _id,
+            treatmentName: name,
+            patient: patientName,
+            slot,
+            date: newDate,
+            email,
+            number
+        };
 
         // data post to mongo
         axios.post(`http://localhost:5000/bookings`, bookingDetails)
-            .then(resposnse => {
-                console.log(resposnse.data)
+            .then(data => {
+                if (data.data.success) {
+                    toast(`Successfully booked in ${data.data.booking?.date} at ${data.data.booking?.slot}`)
+                } else {
+                    toast(`Already have a booking in ${data.data.booking?.date} at ${data.data.booking?.slot}`)
+                }
+                refetch();
+                setTreatment(null)
             })
-        setTreatment(null)
     }
 
     return (
@@ -38,13 +54,13 @@ const BookingModal = ({ treatment, date, setTreatment }) => {
 
                         <select className="w-100 p-2 border-2 border-accent mb-3 rounded-lg" name="slot" id="slot">
                             {
-                                slots.map(slot => <option key={slot}>{slot}</option>)
+                                slots.map((slot, index) => <option key={index}>{slot}</option>)
                             }
                         </select>
 
-                        <input className='w-100 p-2 border-2 border-accent mb-3 rounded-lg' type="text" name="name" id="name" placeholder='Full name' required />
+                        <input className='w-100 p-2 border-2 border-accent mb-3 rounded-lg' type="text" name="name" id="name" value={user.displayName} disabled />
 
-                        <input className='w-100 p-2 border-2 border-accent mb-3 rounded-lg' type="email" name="email" id="email" placeholder='Enter email' required />
+                        <input className='w-100 p-2 border-2 border-accent mb-3 rounded-lg' type="email" name="email" id="email" value={user.email} disabled />
 
                         <input className='w-100 p-2 border-2 border-accent mb-3 rounded-lg' type="number" name="number" id="number" placeholder='Phone number' required />
 
