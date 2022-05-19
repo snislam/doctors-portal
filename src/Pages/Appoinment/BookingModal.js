@@ -28,7 +28,7 @@ const BookingModal = ({ treatment, date, setTreatment, refetch }) => {
         };
 
         // data post to mongo
-        axios.post(`http://localhost:5000/bookings`, bookingDetails)
+        axios.post(`https://lit-retreat-57024.herokuapp.com/bookings`, bookingDetails)
             .then(data => {
                 if (data.data.success) {
                     toast(`Successfully booked in ${data.data.booking?.date} at ${data.data.booking?.slot}`)
