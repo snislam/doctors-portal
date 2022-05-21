@@ -1,6 +1,7 @@
 [
     {
         "name": "Teeth Orthodontics",
+        "price": 49,
         "slots": [
             "8: 00 AM - 8: 30 AM",
             "8: 30 AM - 9: 00 AM",
@@ -15,6 +16,7 @@
     },
     {
         "name": "Cosmetic Dentistry",
+        "price": 59,
         "slots": [
             "8: 00 AM - 8: 30 AM",
             "8: 30 AM - 9: 00 AM",
@@ -29,6 +31,7 @@
     },
     {
         "name": "Teeth Cleaning",
+        "price": 99,
         "slots": [
             "8: 00 AM - 8: 30 AM",
             "8: 30 AM - 9: 00 AM",
@@ -43,6 +46,7 @@
     },
     {
         "name": "Pediatric dentist",
+        "price": 69,
         "slots": [
             "8: 00 AM - 8: 30 AM",
             "8: 30 AM - 9: 00 AM",
@@ -57,6 +61,7 @@
     },
     {
         "name": "Pooting",
+        "price": 39,
         "slots": [
             "8: 00 AM - 8: 30 AM",
             "8: 30 AM - 9: 00 AM",
@@ -71,6 +76,7 @@
     },
     {
         "name": "Teeth repair",
+        "price": 79,
         "slots": [
             "8: 00 AM - 8: 30 AM",
             "8: 30 AM - 9: 00 AM",

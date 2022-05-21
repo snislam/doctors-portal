@@ -4,6 +4,7 @@ import auth from '../../firebase.init';
 import { toast } from 'react-toastify';
 import { signOut } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 const MyAppoinment = () => {
     const [appoinments, setAppoinments] = useState([]);
@@ -41,6 +42,7 @@ const MyAppoinment = () => {
                             <th>Treatment</th>
                             <th>Date</th>
                             <th>Time</th>
+                            <th>Payment</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -51,13 +53,17 @@ const MyAppoinment = () => {
                                 <td>{a.treatmentName}</td>
                                 <td>{a.date}</td>
                                 <td>{a.slot}</td>
+                                <td>
+                                    {(a.price && !a.paid) && <Link className='btn btn-xs btn-primary' to={`/dashboard/payment/${a._id}`} > Pay</Link>}
+                                    {(a.price && a.paid) && <span className='text-success'>Paid</span>}
+                                </td>
                             </tr>)
                         }
 
                     </tbody>
                 </table>
             </div>
-        </div>
+        </div >
     );
 };
 

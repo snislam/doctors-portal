@@ -1,7 +1,7 @@
 import React from 'react';
 
 const BookServiceCard = ({ service, setTreatment }) => {
-    const { name, available } = service;
+    const { name, available, price } = service;
     return (
         <div className='p-5 rounded-lg shadow-md text-center'>
             <h3 className='text-secondary text-lg font-semibold'>{name}</h3>
@@ -11,6 +11,7 @@ const BookServiceCard = ({ service, setTreatment }) => {
                 }
             </p>
             <p className='pt-3 uppercase'>{available.length} {available.length > 1 ? 'spaces' : 'space'} Available</p>
+            <p className='mt-3'>Price: ${price}</p>
             <label
                 onClick={() => setTreatment(service)}
                 htmlFor='booking-modal'
